@@ -1,0 +1,67 @@
+@font-face {
+    font-family: 'digital-7';
+    src: url('../elevate/fonts/digital-7.ttf');
+  }
+
+@font-face {
+    font-family: 'franchise';
+    src: url('../elevate/fonts/franchise.ttf');
+  }
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+[class$="-container"] {
+    display: flex;
+}
+
+[class$="-container"]:first-of-type {
+    justify-content: center;
+}
+
+.elevator, .title {
+    font-size: 100px;
+    width: 200px;
+    text-align: center;
+    flex-direction: row;
+    padding: 30px;
+}
+
+.elevator {
+    color: #19E355;
+    font-family: 'digital-7';
+}
+
+.title {
+    color: goldenrod;
+    font-family: 'franchise';
+}
+
+.elevator div {
+    background-color: black;
+}
+
+.add-button {
+    padding: 30px;
+}
+
+.elevator-door {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background-color: black;
+    transition: 0.8s ease;
+}
+
+#left-door {
+    left: -50%;
+}
+
+#right-door {
+    right: -50%;
+}
+  
