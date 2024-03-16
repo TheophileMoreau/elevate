@@ -94,3 +94,34 @@ body {
     width: 98%;
     height: 98%;
 }
+
+.counter-container {
+    display: flex;
+    width: 200px; /* Adjust width as needed */
+    margin: 0 auto; /* Center the container */
+    padding-top: 20%;
+}
+
+.counter-button {
+    padding: 10px;
+    background-color: #DCDCDC;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.counter-input {
+    text-align: center;
+    width: 70%;
+    font-size: 30px;
+}
+
+.counter-input::-webkit-inner-spin-button,
+.counter-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.button-container {
+    padding: 20px;
+}
