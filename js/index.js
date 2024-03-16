@@ -82,6 +82,8 @@ function fetchCurrentElevatorsData(id, currentViewElevators) {
 // Function to go to next floors
 function elevatorInteractions(elevator, floorsToMove) {
 
+    floorsToMove = parseInt(floorsToMove);
+
     console.log('in interactions, I find : ');
     console.log(elevator);
 
@@ -94,7 +96,7 @@ function elevatorInteractions(elevator, floorsToMove) {
 
     // If there is enough room to move
     if (parseInt(elevator.totalFloors) + parseInt(floorsToMove) < parseInt(elevator.breakingPoint)) {
-        playerFloor += floorsToMove; // Add the number of floors
+        playerFloor += parseInt(floorsToMove); // Add the number of floors
         console.log('success, new floor : ' + playerFloor);
     } else {
         topFloor = playerFloor;

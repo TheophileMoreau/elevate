@@ -59,3 +59,14 @@ function populateElevatorDivs(elevators) {
 
 // Update the elevators divs in html
 populateElevatorDivs(currentViewElevators);
+
+
+// Function to reset inputs to zero
+function resetInputs(elevators) {
+    elevators.forEach(function(elevator) {
+        var inputElement = document.getElementById('elevator' + elevator.id + '-input');
+        inputElement.value = 0;
+    })
+}
+
+resetInputs(currentViewElevators);
