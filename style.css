@@ -18,7 +18,7 @@ body {
     display: flex;
 }
 
-[class$="-container"]:first-of-type {
+[class$="-container"] {
     justify-content: center;
 }
 
@@ -35,17 +35,37 @@ body {
     font-family: 'digital-7';
 }
 
-.title {
-    color: goldenrod;
+[class$="title"] {
     font-family: 'franchise';
 }
 
-.elevator div {
+.down-title {
+    font-size: 30px;
+    padding: 5px;
+}
+
+#current-stage {
+    color: goldenrod;
+}
+
+#best-score {
+    color: red;
+}
+
+.elevator .position {
     background-color: black;
 }
 
-.add-button {
+.floor-selection {
     padding: 30px;
+}
+
+.add-button {
+    padding: 20px;
+}
+
+.button-container button {
+    padding: 10px;
 }
 
 .elevator-door {
@@ -53,15 +73,24 @@ body {
     top: 0;
     width: 50%;
     height: 100%;
-    background-color: black;
+    background-color: gray;
     transition: 0.8s ease;
+    display: flex;
+    align-items: center;
 }
 
 #left-door {
     left: -50%;
+    justify-content: left;
 }
 
 #right-door {
     right: -50%;
+    justify-content: right;
 }
-  
+
+.elevator-inside-door {
+    background-color: #DCDCDC;
+    width: 98%;
+    height: 98%;
+}
