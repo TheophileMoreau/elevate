@@ -48,7 +48,7 @@ function generateElevators(numberOfElevators) {
 }
 
 // Number of elevators we want :
-var numberOfElevators = 1000; // Total number of elevators created
+var numberOfElevators = 300; // Total number of elevators created
 var numberAvailableElevators = 4; // Number of elevators the player can see
 
 // Generate our elevators array
@@ -178,6 +178,13 @@ function attachEventListeners(elevators) {
     elevators.forEach(function (elevator) {
         var addButton = document.getElementById('elevator' + elevator.id + '-button');
         addButton.addEventListener('click', function () {
+
+            var buttons = document.querySelectorAll('button');
+            // Disable all buttons
+            buttons.forEach(function (button) {
+                button.disabled = true;
+            });
+
             // Show overlay with fade effect and update data while the screen is black
             closeElevatorDoors(function () {
                 fetchCurrentElevatorsData(elevator.id, currentViewElevators); // See what interaction it does
@@ -201,8 +208,16 @@ function openElevatorDoors(callback) {
     // Animate the right door to move to the center
     document.getElementById('right-door').style.right = '-50%';
 
-    // Invoke the callback function after the animation is complete
-    setTimeout(callback, 1000); // Adjust the time delay as needed
+    var buttons = document.querySelectorAll('button');
+
+    setTimeout(function () {
+        // Enable all buttons after the animation is complete
+        buttons.forEach(function (button) {
+            button.disabled = false;
+        });
+        // Call the callback function
+        callback();
+    }, 500); // Adjust the time delay as needed
 }
 
 // Function to close elevator doors
@@ -213,5 +228,5 @@ function closeElevatorDoors(callback) {
     document.getElementById('right-door').style.right = '0%';
 
     // Invoke the callback function after the animation is complete
-    setTimeout(callback, 1000); // Adjust the time delay as needed
+    setTimeout(callback, 1500); // Adjust the time delay as needed
 }
