@@ -19,7 +19,7 @@ function generateElevators(numberOfElevators) {
 }
 
 // Number of elevators we want :
-var numberOfElevators = 300; // Total number of elevators created
+var numberOfElevators = 250; // Total number of elevators created
 var numberAvailableElevators = 4; // Number of elevators the player can see
 
 // Generate our elevators array
