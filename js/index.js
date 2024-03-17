@@ -1,8 +1,8 @@
 // GAME FUNCTIONS
 
 // Elevators distribution infos :
-var mean = 500; // Mean of the normal distribution
-var standardDeviation = 100; // Standard deviation of the normal distribution
+var mean = 750; // Mean of the normal distribution
+var standardDeviation = 125; // Standard deviation of the normal distribution
 var minValue = 0; // Minimum allowed value
 var maxValue = 1000; // Maximum allowed value
 
@@ -19,7 +19,7 @@ function generateElevators(numberOfElevators) {
 }
 
 // Number of elevators we want :
-var numberOfElevators = 300; // Total number of elevators created
+var numberOfElevators = 1000; // Total number of elevators created
 var numberAvailableElevators = 4; // Number of elevators the player can see
 
 // Generate our elevators array
