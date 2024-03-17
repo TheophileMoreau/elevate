@@ -177,7 +177,7 @@ function attachGotoButtons(elevators) {
                             }); // Hide overlay with fade effect after data updat
                             console.log('______________');
 
-                        });
+                        }, messageContent);
                     }
                 }
             } else {
@@ -268,7 +268,7 @@ function attachEnterKey(elevators) {
 
                             // Unselect the current input
                             inputElement.blur();
-                        });
+                        }, messageContent);
 
                         // Prevent default key behavior
                         event.preventDefault();

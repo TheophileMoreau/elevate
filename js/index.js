@@ -62,6 +62,8 @@ var currentViewElevators = findCloseElevators(playerFloor, elevatorsState, numbe
 console.log('current view is :');
 console.log(currentViewElevators);
 
+var messageContent = '';
+
 
 function fetchCurrentElevatorsData(id, currentViewElevators) {
 
@@ -98,6 +100,8 @@ function elevatorInteractions(elevator, floorsToMove) {
         playerFloor += parseInt(floorsToMove); // Add the number of floors
         console.log('success, new floor : ' + playerFloor);
 
+        messageContent = 'NEXT FLOOR !';
+
     } else {
         topFloor = playerFloor;
         playerFloor = 0;
@@ -105,6 +109,8 @@ function elevatorInteractions(elevator, floorsToMove) {
 
         showTopFloor(topFloor); // Update best score
         console.log('top score is updated');
+
+        messageContent = 'KABOOM !';
     }
 
     currentViewElevators = findCloseElevators(playerFloor, elevatorsState, numberAvailableElevators); // Find closest elevators

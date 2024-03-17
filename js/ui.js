@@ -10,6 +10,8 @@ function openElevatorDoors(callback) {
     var buttons = document.querySelectorAll('button');
     var inputs = document.querySelectorAll('input');
 
+    showMessage('');
+
     setTimeout(function () {
         // Enable all buttons after the animation is complete
         buttons.forEach(function (button) {
@@ -27,14 +29,22 @@ function openElevatorDoors(callback) {
 }
 
 // Function to close elevator doors
-function closeElevatorDoors(callback) {
+function closeElevatorDoors(callback, messageContent) {
     // Animate the left door to move back to the original position
     document.getElementById('left-door').style.left = '0%';
     // Animate the right door to move back to the original position
     document.getElementById('right-door').style.right = '0%';
-
-    // Invoke the callback function after the animation is complete
-    setTimeout(callback, 1500); // Adjust the time delay as needed
+    
+    // Delay showing the message until after the animation is complete
+    setTimeout(function() {
+        // Show message after the doors are closed
+        showMessage(messageContent);
+        
+        // Invoke the callback function after the message is shown
+        setTimeout(function() {
+            callback();
+        }, 1500); // Adjust the time delay as needed
+    }, 1000); // Adjust the time delay as needed
 }
 
 // Function to add current floor in the html
@@ -79,41 +89,7 @@ function resetInputs(elevators) {
 resetInputs(currentViewElevators);
 
 
-// Function to disable all buttons
-function disableAllButtons() {
-    var buttons = document.querySelectorAll('button');
-    // Disable all buttons
-    buttons.forEach(function (button) {
-        button.disabled = true;
-    });
-
-    var inputs = document.querySelectorAll('input');
-    // Disable all inputs
-    inputs.forEach(function (input) {
-        input.disabled = true;
-    });
-
-}
-
-
-// Function to disable the buttons of a specific elevator
-function disableElevatorButtons(elevator) {
-    var buttons = document.querySelectorAll('#elevator' + elevator[0].id + ' button');
-    console.log(buttons);
-    // Disable this elevator's button
-    buttons.forEach(function (button) {
-        button.disabled = true;
-    });
-
-    var inputs = document.querySelectorAll('#elevator' + elevator[0].id + ' input');
-    console.log(inputs);
-    // Disable this elevator's button
-    inputs.forEach(function (input) {
-        input.disabled = true;
-        input.value = '';
-    });
-}
-
+// Function to disable actionnable elements of list of elevators
 function disableButtonsAndInputs(elevators) {
     elevators.forEach(function (elevator) {
 
@@ -133,4 +109,14 @@ function disableButtonsAndInputs(elevators) {
         });
 
     });
+}
+
+
+// Function to message content between turns
+function showMessage(messageContent) {
+    console.log(messageContent);
+    var messageDiv = document.getElementById('message-between-turn');
+
+    messageDiv.innerHTML = messageContent;
+    console.log('new message is : ', messageDiv.innerHTML);
 }
