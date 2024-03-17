@@ -1,6 +1,6 @@
-<p align="center">
-ELEVATE PROJECT (March 2024)
-</p>
+
+###ELEVATE PROJECT (March 2024)
+
 <p align="center">
 First steps towards a fun and creative online game !!
 </p>
