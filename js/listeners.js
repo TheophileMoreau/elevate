@@ -111,6 +111,10 @@ function attachPlusMinusButtons(elevators) {
 attachPlusMinusButtons(currentViewElevators);
 
 
+// Flag to track whether event listener to send data has been launched
+var eventListenerAdded = false;
+
+
 // Attach click event listeners to go to button
 function attachGotoButtons(elevators) {
     console.log('Attaching Go To listeners');
@@ -123,30 +127,46 @@ function attachGotoButtons(elevators) {
         // Add event listener to the minus button
         gotoButton.addEventListener('click', function () {
 
-            // Get the current input
-            var inputElement = document.getElementById('elevator' + elevator.id + '-input');
-            var currentValue = inputElement.value;
+            console.log('eventListenerAdded :', eventListenerAdded);
 
-            var buttons = document.querySelectorAll('button');
-            // Disable all buttons
-            buttons.forEach(function (button) {
-                button.disabled = true;
-            });
+            if (eventListenerAdded == false) {
 
-            // Show overlay with fade effect and update data while the screen is black
-            closeElevatorDoors(function () {
-                var elevatorData = fetchCurrentElevatorsData(elevator.id, currentViewElevators); // See what interaction it does
-                if (elevatorData) {
-                    elevatorInteractions(elevatorData, currentValue);
-                } else {
-                    // Handle the case when elevator data is not found
-                    console.log("Elevator data not found for id:", elevator.id);
+                // Get the current input
+                var inputElement = document.getElementById('elevator' + elevator.id + '-input');
+                var currentValue = inputElement.value;
+
+                // Do not send if value is 0
+                if (currentValue > 0) {
+
+                    // Set the value to true
+                    eventListenerAdded = true;
+
+
+                    var buttons = document.querySelectorAll('button');
+                    // Disable all buttons
+                    buttons.forEach(function (button) {
+                        button.disabled = true;
+                    });
+
+                    // Show overlay with fade effect and update data while the screen is black
+                    closeElevatorDoors(function () {
+                        var elevatorData = fetchCurrentElevatorsData(elevator.id, currentViewElevators); // See what interaction it does
+                        if (elevatorData) {
+                            elevatorInteractions(elevatorData, currentValue);
+                        } else {
+                            // Handle the case when elevator data is not found
+                            console.log("Elevator data not found for id:", elevator.id);
+                        }
+                        resetInputs(currentViewElevators);
+                        openElevatorDoors(() => {
+                            // Reset the value to false and allow key pressed
+                            eventListenerAdded = false;
+                        }); // Hide overlay with fade effect after data updat
+                        console.log('______________');
+
+                    });
                 }
-                resetInputs(currentViewElevators);
-                openElevatorDoors(); // Hide overlay with fade effect after data update
-                console.log('______________');
-
-            });
+            }
         });
     });
 }
@@ -155,7 +175,7 @@ attachGotoButtons(currentViewElevators);
 
 
 // Attach key event listeners to enter key
-function attachGotoButtons(elevators) {
+function attachEnterKey(elevators) {
     console.log('Attaching Go To listeners');
 
     elevators.forEach(function (elevator) {
@@ -165,40 +185,59 @@ function attachGotoButtons(elevators) {
 
         // Add event listener to the minus button
         inputElement.addEventListener('keydown', function (event) {
+            console.log('eventListenerAdded :', eventListenerAdded);
 
-            if (event.key == 'Enter') {
-                console.log('enter is pressed');
-                console.log(event);
+            // Get the current input
+            var currentValue = inputElement.value;
 
-                // Get the current input
-                var currentValue = inputElement.value;
+            if (eventListenerAdded == false && currentValue > 0) {
 
-                var buttons = document.querySelectorAll('button');
-                // Disable all buttons
-                buttons.forEach(function (button) {
-                    button.disabled = true;
-                });
+                // Set the value to true
+                eventListenerAdded = true;
 
-                // Show overlay with fade effect and update data while the screen is black
-                closeElevatorDoors(function () {
-                    var elevatorData = fetchCurrentElevatorsData(elevator.id, currentViewElevators); // See what interaction it does
-                    if (elevatorData) {
-                        elevatorInteractions(elevatorData, currentValue);
-                    } else {
-                        // Handle the case when elevator data is not found
-                        console.log("Elevator data not found for id:", elevator.id);
-                    }
-                    resetInputs(currentViewElevators);
-                    openElevatorDoors(); // Hide overlay with fade effect after data update
-                    console.log('______________');
+                if (event.key == 'Enter') {
+                    console.log('enter is pressed');
+                    console.log(event);
+                    console.log('event is for id : ', elevator.id);
 
-                });
+                    // Prevent double triggering of the event
+                    event.stopPropagation();
 
-                // Prevent default key behavior
-                event.preventDefault();
+                    var buttons = document.querySelectorAll('button');
+                    // Disable all buttons
+                    buttons.forEach(function (button) {
+                        button.disabled = true;
+                    });
+
+                    // Show overlay with fade effect and update data while the screen is black
+                    closeElevatorDoors(function () {
+                        var elevatorData = fetchCurrentElevatorsData(elevator.id, currentViewElevators); // See what interaction it does
+                        if (elevatorData) {
+                            elevatorInteractions(elevatorData, currentValue);
+                        } else {
+                            // Handle the case when elevator data is not found
+                            console.log("Elevator data not found for id:", elevator.id);
+                        }
+                        resetInputs(currentViewElevators);
+                        openElevatorDoors(() => {
+                            // Reset the value to false and allow key pressed
+                            eventListenerAdded = false;
+                        }); // Hide overlay with fade effect after data update
+                        console.log('______________');
+
+                        // Unselect the current input
+                        inputElement.blur();
+                    });
+
+                    // Prevent default key behavior
+                    event.preventDefault();
+                }
+            } else {
+                // Reset the value to false and allow key pressed
+                eventListenerAdded = false;
             }
         });
     });
 }
 
-attachGotoButtons(currentViewElevators);
+attachEnterKey(currentViewElevators);
