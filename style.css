@@ -1,12 +1,12 @@
 @font-face {
     font-family: 'digital-7';
     src: url('../elevate/fonts/digital-7.ttf');
-  }
+}
 
 @font-face {
     font-family: 'franchise';
     src: url('../elevate/fonts/franchise.ttf');
-  }
+}
 
 body {
     display: flex;
@@ -20,9 +20,12 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0); /* Adjust opacity as needed */
-    z-index: 1; /* Higher z-index than other elements */
-    pointer-events: none; /* Allow clicks to pass through */
+    background-color: rgba(0, 0, 0, 0);
+    /* Adjust opacity as needed */
+    z-index: 1;
+    /* Higher z-index than other elements */
+    pointer-events: none;
+    /* Allow clicks to pass through */
 }
 
 [class$="-container"] {
@@ -33,18 +36,24 @@ body {
     justify-content: center;
 }
 
-.elevator, .title {
+.elevator,
+.title {
     font-size: 100px;
     width: 15%;
     height: 5%;
     text-align: center;
     padding: 30px;
-    overflow: hidden; /* Hide overflow content */
-    white-space: nowrap; /* Prevent wrapping */
-    text-overflow: ellipsis; /* Display ellipsis (...) for overflow text */
+    overflow: hidden;
+    /* Hide overflow content */
+    white-space: nowrap;
+    /* Prevent wrapping */
+    text-overflow: ellipsis;
+    /* Display ellipsis (...) for overflow text */
 }
 
-.elevator, input, .button-container button {
+.elevator,
+input,
+.button-container button {
     font-family: 'digital-7';
 }
 
@@ -111,8 +120,10 @@ body {
 .counter-container {
     display: flex;
     flex-wrap: wrap;
-    width: 100%; /* Adjust width as needed */
-    margin: 0 auto; /* Center the container */
+    width: 100%;
+    /* Adjust width as needed */
+    margin: 0 auto;
+    /* Center the container */
     padding-top: 20%;
 }
 
@@ -129,7 +140,8 @@ body {
     font-size: 30px;
 }
 
-.counter-input, .counter-button {
+.counter-input,
+.counter-button {
     border-width: 2px;
 }
 
@@ -150,12 +162,12 @@ body {
     border-width: 3px;
 }
 
-.minus-button  {
+.minus-button {
     border-top-left-radius: 25%;
     border-bottom-left-radius: 25%;
 }
 
-.plus-button  {
+.plus-button {
     border-top-right-radius: 25%;
     border-bottom-right-radius: 25%;
 }
