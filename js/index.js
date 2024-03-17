@@ -107,19 +107,10 @@ function elevatorInteractions(elevator, floorsToMove) {
         playerFloor = 0;
         console.log('you lose');
 
-        showTopFloor(topFloor); // Update best score
-        console.log('top score is updated');
-
         messageContent = 'KABOOM !';
     }
 
     currentViewElevators = findCloseElevators(playerFloor, elevatorsState, numberAvailableElevators); // Find closest elevators
     console.log('new elevators found');
     console.log(currentViewElevators);
-    populateElevatorDivs(currentViewElevators); // Populate divs with new elevators
-    console.log('data is updated');
-
-    showCurrentFloor(playerFloor); // Update current floor
-    console.log('current floor is updated');
-
 }

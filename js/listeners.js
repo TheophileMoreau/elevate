@@ -162,14 +162,18 @@ function attachGotoButtons(elevators) {
                         // Disable all buttons
                         disableButtonsAndInputs(currentViewElevators);
 
+                        elevatorInteractions(elevatorData, currentValue);
+
                         // Show overlay with fade effect and update data while the screen is black
                         closeElevatorDoors(function () {
-                            if (elevatorData) {
-                                elevatorInteractions(elevatorData, currentValue);
-                            } else {
-                                // Handle the case when elevator data is not found
-                                console.log("Elevator data not found for id:", elevator.id);
-                            }
+                            populateElevatorDivs(currentViewElevators); // Populate divs with new elevators
+                            console.log('data is updated');
+
+                            showTopFloor(topFloor); // Update best score
+                            console.log('top score is updated');
+
+                            showCurrentFloor(playerFloor); // Update current floor
+                            console.log('current floor is updated');
                             resetInputs(currentViewElevators);
                             openElevatorDoors(() => {
                                 // Reset the value to false and allow key pressed
@@ -245,20 +249,24 @@ function attachEnterKey(elevators) {
                         eventListenerAdded = false; // Reset the value to false and allow key pressed
 
                     } else {
-                        
+
                         console.log("everything looks good");
 
                         // Disable all buttons
                         disableButtonsAndInputs(currentViewElevators);
 
+                        elevatorInteractions(elevatorData, currentValue);
+
                         // Show overlay with fade effect and update data while the screen is black
                         closeElevatorDoors(function () {
-                            if (elevatorData) {
-                                elevatorInteractions(elevatorData, currentValue);
-                            } else {
-                                // Handle the case when elevator data is not found
-                                console.log("Elevator data not found for id:", elevator.id);
-                            }
+                            populateElevatorDivs(currentViewElevators); // Populate divs with new elevators
+                            console.log('data is updated');
+
+                            showTopFloor(topFloor); // Update best score
+                            console.log('top score is updated');
+
+                            showCurrentFloor(playerFloor); // Update current floor
+                            console.log('current floor is updated');
                             resetInputs(currentViewElevators);
                             openElevatorDoors(() => {
                                 // Reset the value to false and allow key pressed
