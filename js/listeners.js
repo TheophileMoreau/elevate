@@ -14,10 +14,7 @@ function attachInputElements(elevators) {
             // Get the new value entered by the user
             const newValue = parseInt(event.target.value);
 
-            console.log('on est la hein');
             var elevatorRestToTop = maxValue - fetchCurrentElevatorsData(elevator.id, currentViewElevators).currentPosition;
-            console.log('on est la deux');
-            console.log(elevatorRestToTop);
 
             // If the new value exceeds the maximum allowed value, set it to the maximum
             if (newValue > elevatorRestToTop) {
@@ -67,9 +64,7 @@ function attachPlusMinusButtons(elevators) {
             // Get the current input
             var inputElement = document.getElementById('elevator' + elevator.id + '-input');
             var currentValue = inputElement.value;
-            console.log('current input value :', currentValue);
 
-            console.log('lets remove');
             currentValue--; // Remove to input value
 
             // If the decremented value is negative, set it to 0
@@ -79,7 +74,7 @@ function attachPlusMinusButtons(elevators) {
 
             // Update the input value
             inputElement.value = currentValue;
-            console.log('downgraded input value : ', inputElement.value);
+            console.log('new input value :', currentValue);
         });
 
         // Add event listener to the plus button
@@ -88,9 +83,7 @@ function attachPlusMinusButtons(elevators) {
             // Get the current input
             var inputElement = document.getElementById('elevator' + elevator.id + '-input');
             var currentValue = inputElement.value;
-            console.log('current input value :', currentValue);
 
-            console.log('lets add');
             currentValue++; // Add to input value
 
             var elevatorRestToTop = maxValue - fetchCurrentElevatorsData(elevator.id, currentViewElevators).currentPosition;
@@ -102,8 +95,7 @@ function attachPlusMinusButtons(elevators) {
 
             // Update the input value
             inputElement.value = currentValue;
-            console.log('increased input value : ', inputElement.value);
-            console.log(inputElement);
+            console.log('new input value :', currentValue);
         });
     });
 }
@@ -126,9 +118,7 @@ function attachGotoButtons(elevators) {
 
         // Add event listener to the minus button
         gotoButton.addEventListener('click', function () {
-
-            console.log('eventListenerAdded :', eventListenerAdded);
-
+            console.log('button ', elevator.id, ' pressed');
             if (eventListenerAdded == false) {
 
                 // Get the current input
@@ -141,31 +131,58 @@ function attachGotoButtons(elevators) {
                     // Set the value to true
                     eventListenerAdded = true;
 
+                    // Fetch current data for this elevator
+                    var elevatorData = fetchCurrentElevatorsData(elevator.id, currentViewElevators);
 
-                    var buttons = document.querySelectorAll('button');
-                    // Disable all buttons
-                    buttons.forEach(function (button) {
-                        button.disabled = true;
-                    });
+                    console.log('will it breaks on the way :', parseInt(elevatorData.totalFloors) + parseInt(elevatorData.distanceToPlayer)
+                        >= parseInt(elevatorData.breakingPoint));
 
-                    // Show overlay with fade effect and update data while the screen is black
-                    closeElevatorDoors(function () {
-                        var elevatorData = fetchCurrentElevatorsData(elevator.id, currentViewElevators); // See what interaction it does
-                        if (elevatorData) {
-                            elevatorInteractions(elevatorData, currentValue);
-                        } else {
-                            // Handle the case when elevator data is not found
-                            console.log("Elevator data not found for id:", elevator.id);
+                    // If the elevator brokes on the way
+                    if (parseInt(elevatorData.totalFloors) + parseInt(elevatorData.distanceToPlayer)
+                        >= parseInt(elevatorData.breakingPoint)) {
+
+                        console.log('there seems to be an issue with this elevator');
+                        var thisElevator = [{
+                            id: elevator.id,
+                            breakingPoint: elevator.breakingPoint,
+                            currentPosition: '___',
+                            totalFloors: elevator.breakingPoint,
+                            distanceToPlayer: elevator.breakingPoint
                         }
-                        resetInputs(currentViewElevators);
-                        openElevatorDoors(() => {
-                            // Reset the value to false and allow key pressed
-                            eventListenerAdded = false;
-                        }); // Hide overlay with fade effect after data updat
-                        console.log('______________');
+                        ]
 
-                    });
+                        console.log('thisElevator : ', thisElevator);
+
+                        populateElevatorDivs(thisElevator); // Change the design for this elevator
+                        disableButtonsAndInputs(thisElevator); // Disable this elevator's button
+                        eventListenerAdded = false; // Reset the value to false and allow key pressed
+
+                    } else {
+
+                        // Disable all buttons
+                        disableButtonsAndInputs(currentViewElevators);
+
+                        // Show overlay with fade effect and update data while the screen is black
+                        closeElevatorDoors(function () {
+                            if (elevatorData) {
+                                elevatorInteractions(elevatorData, currentValue);
+                            } else {
+                                // Handle the case when elevator data is not found
+                                console.log("Elevator data not found for id:", elevator.id);
+                            }
+                            resetInputs(currentViewElevators);
+                            openElevatorDoors(() => {
+                                // Reset the value to false and allow key pressed
+                                eventListenerAdded = false;
+                            }); // Hide overlay with fade effect after data updat
+                            console.log('______________');
+
+                        });
+                    }
                 }
+            } else {
+                // Reset the value to false and allow key pressed
+                eventListenerAdded = false;
             }
         });
     });
@@ -176,7 +193,7 @@ attachGotoButtons(currentViewElevators);
 
 // Attach key event listeners to enter key
 function attachEnterKey(elevators) {
-    console.log('Attaching Go To listeners');
+    console.log('Attaching Enter Key listeners');
 
     elevators.forEach(function (elevator) {
 
@@ -185,7 +202,7 @@ function attachEnterKey(elevators) {
 
         // Add event listener to the minus button
         inputElement.addEventListener('keydown', function (event) {
-            console.log('eventListenerAdded :', eventListenerAdded);
+            console.log(event.key, ' on ', elevator.id, ' pressed');
 
             // Get the current input
             var currentValue = inputElement.value;
@@ -203,34 +220,63 @@ function attachEnterKey(elevators) {
                     // Prevent double triggering of the event
                     event.stopPropagation();
 
-                    var buttons = document.querySelectorAll('button');
-                    // Disable all buttons
-                    buttons.forEach(function (button) {
-                        button.disabled = true;
-                    });
+                    // Fetch current data for this elevator
+                    var elevatorData = fetchCurrentElevatorsData(elevator.id, currentViewElevators);
+                    console.log(elevatorData.totalFloors);
 
-                    // Show overlay with fade effect and update data while the screen is black
-                    closeElevatorDoors(function () {
-                        var elevatorData = fetchCurrentElevatorsData(elevator.id, currentViewElevators); // See what interaction it does
-                        if (elevatorData) {
-                            elevatorInteractions(elevatorData, currentValue);
-                        } else {
-                            // Handle the case when elevator data is not found
-                            console.log("Elevator data not found for id:", elevator.id);
+                    // If the elevator brokes on the way
+                    if (parseInt(elevatorData.totalFloors) + parseInt(elevatorData.distanceToPlayer)
+                        >= parseInt(elevatorData.breakingPoint)) {
+
+                        console.log('there seems to be an issue with this elevator');
+                        var thisElevator = [{
+                            id: elevator.id,
+                            breakingPoint: elevator.breakingPoint,
+                            currentPosition: '___',
+                            totalFloors: elevator.breakingPoint,
+                            distanceToPlayer: elevator.breakingPoint
                         }
-                        resetInputs(currentViewElevators);
-                        openElevatorDoors(() => {
-                            // Reset the value to false and allow key pressed
-                            eventListenerAdded = false;
-                        }); // Hide overlay with fade effect after data update
-                        console.log('______________');
+                        ]
 
-                        // Unselect the current input
-                        inputElement.blur();
-                    });
+                        console.log('thisElevator : ', thisElevator);
 
-                    // Prevent default key behavior
-                    event.preventDefault();
+                        populateElevatorDivs(thisElevator); // Change the design for this elevator
+                        disableButtonsAndInputs(thisElevator); // Disable this elevator's button
+                        eventListenerAdded = false; // Reset the value to false and allow key pressed
+
+                    } else {
+                        
+                        console.log("everything looks good");
+
+                        // Disable all buttons
+                        disableButtonsAndInputs(currentViewElevators);
+
+                        // Show overlay with fade effect and update data while the screen is black
+                        closeElevatorDoors(function () {
+                            if (elevatorData) {
+                                elevatorInteractions(elevatorData, currentValue);
+                            } else {
+                                // Handle the case when elevator data is not found
+                                console.log("Elevator data not found for id:", elevator.id);
+                            }
+                            resetInputs(currentViewElevators);
+                            openElevatorDoors(() => {
+                                // Reset the value to false and allow key pressed
+                                eventListenerAdded = false;
+                            }); // Hide overlay with fade effect after data update
+                            console.log('______________');
+
+                            // Unselect the current input
+                            inputElement.blur();
+                        });
+
+                        // Prevent default key behavior
+                        event.preventDefault();
+                    }
+                } else {
+                    // If key is not enter
+                    // Reset the value to false and allow key pressed
+                    eventListenerAdded = false;
                 }
             } else {
                 // Reset the value to false and allow key pressed
