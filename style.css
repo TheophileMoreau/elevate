@@ -15,13 +15,30 @@ body {
     user-select: none; /* Prevent text selection */
 }
 
+.message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    pointer-events: none; /* Allow clicks to pass through */
+    display: flex;
+    align-items: center;
+    z-index: 2;
+}
+
+.message-content {
+    font-size: 100px;
+
+}
+
 .doors {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0);
     /* Adjust opacity as needed */
     z-index: 1;
     /* Higher z-index than other elements */

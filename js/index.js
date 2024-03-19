@@ -19,7 +19,7 @@ function generateElevators(numberOfElevators) {
 }
 
 // Number of elevators we want :
-var numberOfElevators = 1000; // Total number of elevators created
+var numberOfElevators = 250; // Total number of elevators created
 var numberAvailableElevators = 4; // Number of elevators the player can see
 
 // Generate our elevators array
@@ -62,6 +62,8 @@ var currentViewElevators = findCloseElevators(playerFloor, elevatorsState, numbe
 console.log('current view is :');
 console.log(currentViewElevators);
 
+var messageContent = '';
+
 
 function fetchCurrentElevatorsData(id, currentViewElevators) {
 
@@ -70,8 +72,6 @@ function fetchCurrentElevatorsData(id, currentViewElevators) {
         // Check if the current elevator's id matches the specified id
         if (currentViewElevators[i].id === id) {
             // Run the function for the specified id
-            console.log('fetching data : ');
-            console.log(currentViewElevators[i]);
             return currentViewElevators[i];
         }
     }
@@ -84,36 +84,33 @@ function elevatorInteractions(elevator, floorsToMove) {
 
     floorsToMove = parseInt(floorsToMove);
 
-    console.log('in interactions, I find : ');
+    console.log('chosen elevator :');
     console.log(elevator);
 
-    console.log('id : ' + elevator.id + ', totalFloors : ' + elevator.totalFloors);
-    console.log('player floor : ' + playerFloor);
-    console.log('floors to move : ' + floorsToMove);
-    console.log('expected floor : ' + (parseInt(elevator.totalFloors) + parseInt(floorsToMove)));
-    console.log('breaks at : ' + parseInt(elevator.breakingPoint));
-    console.log('logic is : ' + (parseInt(elevator.totalFloors) + parseInt(floorsToMove) < parseInt(elevator.breakingPoint)))
+    console.log('player floor :', playerFloor);
+    console.log('totalFloors : ', elevator.totalFloors);
+    console.log('floors to move : ', floorsToMove);
+    console.log('floors to reach player : ', elevator.distanceToPlayer);
+    console.log('expected total travel : ', (parseInt(elevator.totalFloors) + parseInt(floorsToMove) + parseInt(elevator.distanceToPlayer)));
+    console.log('breaks at : ', parseInt(elevator.breakingPoint));
 
-    // If there is enough room to move
-    if (parseInt(elevator.totalFloors) + parseInt(floorsToMove) < parseInt(elevator.breakingPoint)) {
+    // If there is enough room to move (for the elevator to come and go)
+    if (parseInt(elevator.totalFloors) + parseInt(elevator.distanceToPlayer) + parseInt(floorsToMove)
+        < parseInt(elevator.breakingPoint)) {
         playerFloor += parseInt(floorsToMove); // Add the number of floors
         console.log('success, new floor : ' + playerFloor);
+
+        messageContent = 'NEXT FLOOR !';
+
     } else {
         topFloor = playerFloor;
         playerFloor = 0;
         console.log('you lose');
 
-        showTopFloor(topFloor); // Update best score
-        console.log('top score is updated');
+        messageContent = 'KABOOM !';
     }
 
     currentViewElevators = findCloseElevators(playerFloor, elevatorsState, numberAvailableElevators); // Find closest elevators
     console.log('new elevators found');
     console.log(currentViewElevators);
-    populateElevatorDivs(currentViewElevators); // Populate divs with new elevators
-    console.log('data is updated');
-
-    showCurrentFloor(playerFloor); // Update current floor
-    console.log('current floor is updated');
-
 }
