@@ -1,0 +1,94 @@
+.mobile-title {
+    font-size: 5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+}
+
+@media (orientation: landscape) {
+    .mobile-title {
+        height: 95vw;
+    }
+}
+
+@media (orientation: portrait) {
+    .mobile-title {
+        height: 100vh;
+    }
+}
+
+.mobile-title p {
+    margin: 0; /* Remove margin */
+}
+
+.mobile-title-text {
+    opacity: 100%;
+}
+
+.title-text-1 {
+    opacity: 50%;
+}
+
+.title-text-2 {
+    opacity: 25%;
+}
+
+.title-text-3 {
+    opacity: 10%;
+}
+
+
+.mobile-title#second-left-border-title {
+animation: mobile-drop 16s linear infinite;
+}
+
+.mobile-title#first-left-border-title {
+animation: mobile-rise 18s linear infinite;
+}
+
+.mobile-title#center-title {
+animation: mobile-rise 14s linear infinite;
+}
+
+.mobile-title#first-right-border-title {
+animation: mobile-drop 16s linear infinite;
+}
+
+.mobile-title#second-right-border-title {
+animation: mobile-rise 18s linear infinite;
+}
+
+@keyframes mobile-rise {
+    0% {
+        opacity: 0;
+        transform: translateY(70%); /* Start the text below the container */
+    }
+    5% {
+        opacity: 1;
+    }
+    95% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-70%); /* Move the text above the container */
+    }
+    }
+
+@keyframes mobile-drop {
+    0% {
+        opacity: 0;
+        transform: translateY(-70%); /* Start the text below the container */
+    }
+    5% {
+        opacity: 1;
+    }
+    95% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(70%); /* Move the text above the container */
+    }
+}

@@ -1,0 +1,79 @@
+.title-bar {
+    width: 100vw; /* Take up the full width of the viewport */
+    z-index: 9999; /* Ensure the title bar appears above other content */
+    background-color: #000000;
+    color: #ffffff;
+    padding: 1vh; /* Padding around the text */
+}
+
+#screen {
+    width: 100vw; /* Take up the full width of the viewport */
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#title-bar-text {
+    justify-content: center;
+    margin: 1vh;
+    text-align: center; /* Center the text horizontally */
+    align-items: center;
+    transform: translateY(7%); /* Font has small space below letters */
+}
+
+#outside-button-container {
+    background-color: #000000;
+    width: 30vw;
+    height: 10vh;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-radius: 5%;
+}
+
+#inside-button-container {
+    background-color: #ffffff;
+    width: 98%;
+    height: 90%;
+    border-radius: 5%;
+}
+
+.button-action {
+    background-color: transparent; /* Make the button transparent */
+    border: none; /* Remove the border */
+    color: #000000; /* Set the text color */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    padding: 0; /* Remove padding */
+    width: 100%; /* Set the width of the button to match the container */
+    height: 100%; /* Set the height of the button to match the container */
+    font: inherit;
+    font-size: 4vmin;
+
+    &:hover {
+        background-color:#eeeeee;
+        color: #333333;
+    }
+
+    &:active {
+        background-color:#000000;
+        color: #ffffff;
+    }
+}
+
+.button-action, .button-container { /* Thanks to https://pixelcorners.lukeb.co.uk/ */
+    clip-path: polygon(
+    0px calc(100% - 6px),
+    6px calc(100% - 6px),
+    6px 100%,
+    calc(100% - 6px) 100%,
+    calc(100% - 6px) calc(100% - 6px),
+    100% calc(100% - 6px),
+    100% 6px,
+    calc(100% - 6px) 6px,
+    calc(100% - 6px) 0px,
+    6px 0px,
+    6px 6px,
+    0px 6px
+  );
+}

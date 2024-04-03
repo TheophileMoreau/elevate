@@ -1,0 +1,32 @@
+@font-face {
+  font-family: 'easvhs';
+  src: url(./fonts/easvhs.ttf);
+}
+
+* {
+  box-sizing:border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background: white;
+  font-family: 'easvhs';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-container {
+  flex-direction: column;
+  position: relative;
+  height: 100vh; /* Make the container full height of the viewport */
+  width: 100%;
+  overflow: hidden; /* Hide overflow to prevent scrolling */
+  display: flex; /* Use flexbox */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  font-size: 5vw;
+}
