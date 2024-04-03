@@ -1,6 +1,10 @@
+import { addStylsheet } from './addStylesheet.js';
+
 let ws;
 
 export function addConnectPage(element) {
+    addStylsheet('connect');
+
     element.innerHTML =
         `<div class="title-bar">
         <p id="title-bar-text">Elevate</p>

@@ -1,4 +1,8 @@
+import { addStylsheet } from './addStylesheet.js';
+
 export function addTitlePage(element) {
+  addStylsheet('loading');
+
   var startTime = Date.now();
 
   console.log('Adding title Page');

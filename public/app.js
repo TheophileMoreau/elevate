@@ -27,7 +27,7 @@ var displayLoadingPage = false;
 if (isMobileDevice()) {
     addMobilePage(container);
 }
-if (displayLoadingPage) { // Skip the loading page 
+else if (displayLoadingPage) { // Skip the loading page 
     addTitlePage(container);
 }
 // Otherwise, go to connect page
