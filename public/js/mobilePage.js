@@ -1,4 +1,8 @@
+import { addStylsheet } from './addStylesheet.js';
+
 export function addMobilePage(element) {
+    addStylsheet('mobile');
+
     console.log('Adding mobile page !');
     element.innerHTML = `
       <div class="mobile-title-container" id="titles">

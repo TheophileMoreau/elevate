@@ -1,4 +1,8 @@
-export function addTitlePage(element) {
+import { addStylsheet } from './addStylesheet.js';
+
+export function addTitlePage(element, callbackFunction) {
+  addStylsheet('loading');
+
   var startTime = Date.now();
 
   console.log('Adding title Page');
@@ -45,7 +49,11 @@ export function addTitlePage(element) {
               console.log('Animation is done'); // After everything has disappeared;
               element.innerHTML = '';
               console.log('Nothing left hihihi');
-              console.log('It took ',(Date.now() - startTime) / 1000,'s to do so')
+              console.log('It took ', (Date.now() - startTime) / 1000, 's to do so')
+
+              if (callbackFunction) {
+                callbackFunction();
+              }
             });
           }
         });
