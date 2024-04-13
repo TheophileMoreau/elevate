@@ -4,6 +4,7 @@
     background-color: #000000;
     color: #ffffff;
     padding: 1vh; /* Padding around the text */
+    animation: enlarge 1s linear;
 }
 
 #screen {
@@ -76,4 +77,17 @@
     6px 6px,
     0px 6px
   );
+}
+
+@keyframes enlarge {
+    0% {
+        opacity: 0;
+        width: 20vw;
+    }
+    40% {
+        opacity: 1;
+    }
+    100% {
+        width: 100vw;
+    }
 }

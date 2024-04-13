@@ -1,6 +1,5 @@
 // Check cookies
 var cookies = document.cookie;
-console.log('cookies: ',cookies);
 
 if (!cookies) { // If empty
     cookies = '{}'; // Empty JSON
@@ -13,3 +12,5 @@ if (!parsedCookies.clientId) {
 
 cookies = JSON.stringify(parsedCookies);
 document.cookie = cookies;
+
+console.log('Current cookie is ', document.cookie);
