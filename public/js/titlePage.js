@@ -1,12 +1,13 @@
+import { navigateTo, container } from '../app.js'
 import { addStylsheet } from './addStylesheet.js';
 
-export function addTitlePage(element, callbackFunction) {
+export function addTitlePage(moveToConnect) {
   addStylsheet('loading');
 
   var startTime = Date.now();
 
   console.log('Adding title Page');
-  element.innerHTML = `
+  container.innerHTML = `
     <div class="title-container" id="titles">
       <div class="title" id="second-left-border-title"><div id="elevator">Elevate</div></div>
       <div class="title" id="first-left-border-title"><div id="elevator">Elevate</div></div>
@@ -47,12 +48,12 @@ export function addTitlePage(element, callbackFunction) {
 
             fadeOutElement(finalTitle, () => {
               console.log('Animation is done'); // After everything has disappeared;
-              element.innerHTML = '';
+              container.innerHTML = '';
               console.log('Nothing left hihihi');
               console.log('It took ', (Date.now() - startTime) / 1000, 's to do so')
 
-              if (callbackFunction) {
-                callbackFunction();
+              if (moveToConnect) {
+                navigateTo('connect');
               }
             });
           }

@@ -1,12 +1,16 @@
+import { navigateTo, container } from '../app.js'
 import { addStylsheet } from './addStylesheet.js';
 
 let ws;
+let serverConnected = false;
 
-export function addConnectPage(element) {
+export function addConnectPage() {
     addStylsheet('connect');
 
-    element.innerHTML =
-    `<div class="title-bar">
+    console.log('I made it this far !');
+
+    container.innerHTML =
+        `<div class="title-bar">
         <p id="title-bar-text">Elevate</p>
     </div>
     <div id="screen">
@@ -17,56 +21,45 @@ export function addConnectPage(element) {
         </div>
     </div>`;
 
-    document.addEventListener("DOMContentLoaded", function () {
+    ws = new WebSocket('ws://localhost:3000');
 
-        const connectButton = document.getElementById("connect-button");
+    ws.addEventListener('open', function () {
+        console.log('Opened WebSocket connection !');
+    });
 
-        // Event listener for the "connect" button
-        connectButton.addEventListener('click', () => {
-            var currentCookies = JSON.parse(document.cookie);
-            var clientId = currentCookies.clientId; // Made sure with cookie.js
+    ws.addEventListener('close', () => {
+        console.log('Connection got closed...');
+    });
 
-            // Establish WebSocket connection when the button is clicked
-            ws = new WebSocket('ws://localhost:3000/clientId=' + encodeURIComponent(clientId)); // wss://www.api-elevate-game.xyz/
-            console.log('Clicked url :', ws.url);
+    // Handle messages received from the server
+    ws.addEventListener('message', function (event) {
+        console.log('Received message from server !')
 
-            // Set up event listeners for the WebSocket connection
-            ws.addEventListener('open', function () {
-                console.log('Opened WebSocket connection !');
-            });
+        try {
+            const data = JSON.parse(event.data);
 
-            // Handle messages received from the server
-            ws.addEventListener('message', function (event) {
-
-                console.log(event.data);
-
-                try {
-                    const message = JSON.parse(event.data); // Parse the content of the message
-
-                    if (message.type === 'clientId') { // On first message
-                        // Store the clientId in cookies
-                        var currentCookies = JSON.parse(document.cookie);
-                        currentCookies.clientId = message.clientId; // Replace with provided clientId
-    
-                        document.cookie = JSON.stringify(currentCookies); // Replace cookies
-    
-                        console.log('Received client Id : ', message.clientId);
-                        console.log('New cookies are : ', document.cookie);
-                    }
-                } catch (error) {
-                    // Handle the case where 'message' is not a valid JSON string
-                    console.error('Error parsing JSON:', error);
-                    console.log('Received message from server:', JSON.stringify(message));
+            if (data.type == "serverState") {
+                console.log('Received server state');
+                if (data.serverState) {
+                    console.log('Server ready to provide data');
+                    serverConnected = true;
+                    container.innerHTML = '';
+                    navigateTo('game');
+                } else {
+                    console.log('Server not ready');
                 }
-            });
-        });
+            }
+        } catch (error) {
+            console.error('Error parsing message:', error);
+        }
+    });
 
+    const connectButton = document.getElementById("connect-button");
 
-        ws.addEventListener('close', () => {
-            console.log('Connection got closed...');
-        })
-
+    // Event listener for the "connect" button
+    connectButton.addEventListener('click', () => {
+        ws.send(JSON.stringify({ type: "playerState", playerState: true }));
     });
 }
 
-export { ws };
+export { ws, serverConnected };
