@@ -4,12 +4,13 @@ import { addTitlePage } from './js/titlePage.js';
 import { addMobilePage } from './js/mobilePage.js';
 import { addConnectPage } from './js/connectPage.js';
 import { addGamePage } from './js/gamePage.js';
+import { addErrorPage } from './js/errorPage.js';
 
 // Function to handle navigation
 export function navigateTo(route) {
     // Update content based on the route
     if (route === 'title') {
-        addTitlePage(true);
+        addTitlePage();
     } else if (route === 'connect') {
         addConnectPage();
     } else if (route === 'game') {
@@ -17,7 +18,7 @@ export function navigateTo(route) {
     } else if (route === 'mobile') {
         addMobilePage();
     } else {
-        addTitlePage(false); // Default (only title)
+        addErrorPage(); // Default
     }
 }
 
@@ -42,10 +43,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     var displayLoadingPage = false;
+    var goToGame = true;
+
+    const urlParams = new URLSearchParams(window.location.search);
 
     // Check if the user is on a mobile device
-    if (isMobileDevice()) {
+    if (urlParams.get('redirect') === 'error') {
+        navigateTo();
+    }
+    else if (isMobileDevice()) {
         navigateTo('mobile');
+    }
+    else if (goToGame) { // Go straight to game
+        navigateTo('game')
     }
     else if (displayLoadingPage) { // Skip the loading page boolean 
         navigateTo('title')

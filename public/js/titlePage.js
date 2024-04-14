@@ -1,7 +1,7 @@
 import { navigateTo, container } from '../app.js'
 import { addStylsheet } from './addStylesheet.js';
 
-export function addTitlePage(moveToConnect) {
+export function addTitlePage() {
   addStylsheet('loading');
 
   var startTime = Date.now();
@@ -52,9 +52,7 @@ export function addTitlePage(moveToConnect) {
               console.log('Nothing left hihihi');
               console.log('It took ', (Date.now() - startTime) / 1000, 's to do so')
 
-              if (moveToConnect) {
-                navigateTo('connect');
-              }
+              navigateTo('connect');
             });
           }
         });

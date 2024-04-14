@@ -3,6 +3,7 @@ import { addStylsheet } from './addStylesheet.js';
 
 let ws;
 let serverConnected = false;
+let elevators = {};
 
 export function addConnectPage() {
     addStylsheet('connect');
@@ -11,15 +12,15 @@ export function addConnectPage() {
 
     container.innerHTML =
         `<div class="title-bar">
-        <p id="title-bar-text">Elevate</p>
-    </div>
-    <div id="screen">
-        <div class="button-container" id="outside-button-container">
-            <div class="button-container" id="inside-button-container">
-                <button class="button-action" id="connect-button">connect</button>
-            </div>
+            <p id="title-bar-text">Elevate</p>
         </div>
-    </div>`;
+        <div id="screen">
+            <div class="button-container" id="outside-button-container">
+                <div class="button-container" id="inside-button-container">
+                    <button class="button-action" id="connect-button">connect</button>
+                </div>
+            </div>
+        </div>`;
 
     ws = new WebSocket('ws://localhost:3000');
 
@@ -33,10 +34,11 @@ export function addConnectPage() {
 
     // Handle messages received from the server
     ws.addEventListener('message', function (event) {
-        console.log('Received message from server !')
+        console.log('Received message from server !');
 
         try {
             const data = JSON.parse(event.data);
+            console.log(data);
 
             if (data.type == "serverState") {
                 console.log('Received server state');
@@ -44,10 +46,15 @@ export function addConnectPage() {
                     console.log('Server ready to provide data');
                     serverConnected = true;
                     container.innerHTML = '';
-                    navigateTo('game');
+                    ws.send(JSON.stringify({ type: "getElevators" }));
                 } else {
                     console.log('Server not ready');
                 }
+            } else if (data.type == "elevators") {
+                elevators = data.selectedElevators;
+                console.log('Got elevators :');
+                console.log(elevators);
+                navigateTo('game');
             }
         } catch (error) {
             console.error('Error parsing message:', error);
@@ -62,4 +69,4 @@ export function addConnectPage() {
     });
 }
 
-export { ws, serverConnected };
+export { ws, serverConnected, elevators };
