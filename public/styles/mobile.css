@@ -4,8 +4,7 @@
     flex-direction: row;
     justify-content: space-between; /* Spread items across the main axis */
     margin: 2vw;
-    }
-    
+}   
 
 .mobile-title {
     font-size: 5vw;

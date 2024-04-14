@@ -1,0 +1,65 @@
+:root {
+    --elevator-hue: 0;
+    --elevator-saturation: 0;
+}
+
+#gameContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Spread items across the main axis */
+    margin: 2vw;
+}   
+
+.elevator {
+    width: 20vw;
+    font-size: 3vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+}
+
+.elevator-title {
+    height: 10vh;
+    margin: 3vh;
+}
+
+.elevator-doors {
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.elevator-door {
+    width: 50%;
+    height: 100%;
+    background-color: hsl(var(--elevator-hue) var(--elevator-saturation) 40%);
+    display: flex;
+    align-items: center;
+}
+
+#left-door {
+    justify-content: left;
+}
+
+#right-door {
+    justify-content: right;
+}
+
+.elevator-inside-door {
+    background-color: hsl(var(--elevator-hue) var(--elevator-saturation) 80%);
+    width: 98%;
+    height: 98%;
+}
+
+#outside-button-container {
+    width: 15vw;
+    height: 7vh;
+    margin: 5vh;
+}
+
+.button-action {
+    font-size: 3vmin;
+}
