@@ -1,11 +1,16 @@
 import { navigateTo, container } from '../app.js';
 import { addStylsheet } from './addStylesheet.js';
 import { ws, elevators } from './connectPage.js';
+import { addInsidePage } from './insidePage.js';
 
 export function addGamePage() {
 
     if (!ws) {
         console.log('No socket found !');
+        navigateTo('connect');
+        return
+    } else if (!elevators) {
+        console.log('No elevators found !');
         navigateTo('connect');
         return
     }
@@ -68,9 +73,11 @@ export function addGamePage() {
     Array.from(buttons).forEach(function (button) {
         button.addEventListener('click', () => {
             console.log('click');
+            console.log(button);
 
-            ws.send(JSON.stringify({ type: "getElevators" }));
-            console.log('I have this :');
+            var buttonNumber = (button.id.match(/\d+/))[0]; // Get the elevator number
+
+            addInsidePage(elevators[buttonNumber - 1]);
         });
     });
 }
