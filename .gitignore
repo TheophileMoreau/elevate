@@ -1,5 +1,5 @@
-back/
 node_modules/
 package.json
 package-lock.json
 server-front.js
+base-elevators.json
